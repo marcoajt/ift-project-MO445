@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
 
       /* Complete the code below to estimate the bias of each
 	 kernel */
-   for(int col = 0; col < kernels->ncols; ncols++){
+   for(int col = 0; col < kernels->ncols; col++){
     for(int row = 0; row < Z->nfeats; row++){
       iftMatrixElem(kernels, col, row) = iftMatrixElem(kernels, col, row) / Z->fsp.stdev[row];
       bias[col] -= (Z->fsp.mean[row] * iftMatrixElem(kernels, col, row));
