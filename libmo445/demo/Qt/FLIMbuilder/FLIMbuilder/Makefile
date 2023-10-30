@@ -2397,10 +2397,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		flim.h \
 		projection.h \
 		graphnode.h \
-		ui_mainwindow.h \
-		mycombobox.h \
-		mygraphicsview.h \
-		myplaintextedit.h
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 common.o: common.cpp common.h \
@@ -4040,7 +4037,6 @@ projection.o: projection.cpp flim.h \
 		projection.h \
 		graphnode.h \
 		ui_projection.h \
-		projectiongraphicsview.h \
 		graphedge.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o projection.o projection.cpp
 
