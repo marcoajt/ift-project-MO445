@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "ift.h": "c",
+        "boundingbox.h": "c",
+        "dialog.h": "c",
+        "numerical.h": "c",
+        "os.h": "c",
+        "histogram.h": "c",
+        "basicdatatypes.h": "c"
+    }
+}
