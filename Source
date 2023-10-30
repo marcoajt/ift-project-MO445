@@ -1,2 +1,13 @@
 Git 
 https://github.com/LIDS-UNICAMP/MISe
+
+Passos do trabalho
+
+1-Prepoc - Preprocessar as imagens. Pasta das imagens /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images
+COD: ./preproc /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images 1 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images_filter
+Processing image 96 of 96
+Done ... 13 sec(s) 114 ms
+
+2-Utilizar o Flim para marcar o objeto, depois disso salvar as imagens.
+3-Depois utilizar o Bag of Feature Points 
+4-Em seguida continuar com os outros codigos que então no projeto
