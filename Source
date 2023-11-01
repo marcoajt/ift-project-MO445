@@ -15,3 +15,16 @@ COD: ./preproc /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analy
 4-Create_layer
 ./create_layer_model /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/bag_markers /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/arch.json 1 newflim
 
+5-Encode Layer
+Usage: encode_layer <P1> <P2> <P3>
+[1] architecture of the network (.json) 
+[2] layer number (1, 2, 3) 
+[3] folder with the models   (Pega os modelos da pasta newflim)
+
+./encode_layer /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/arch.json 1 newflim/
+
+Após a execução, e gerado no bin a pasta layer1
+
+
+
+

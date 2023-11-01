@@ -104,6 +104,31 @@ int main(int argc, char *argv[]) {
 	/* Complete the code below to compute convolution with a kernel
 	   bank followed by bias */
 
+  iftMatrix *XI = iftMImageToFeatureMatrix(mimg,A,NULL);
+  iftMatrix *XJ = iftMultMatrices(XI, K);
+
+  iftDestroyMatrix(&XI);
+
+  iftMImage *activ = iftMatrixToMImage(XJ, mimg->xsize, mimg->ysize, mimg->zsize, K->ncols, 'c');
+
+  iftDestroyMatrix(&XJ);
+  iftDestroyAdjRel(&A);
+
+  if (arch->layer[layer-1].relu) {
+    for (int p = 0; p < activ->n; p++){
+      for (int b = 0; b < activ->m; b++){
+        activ->val[p][b] += bias[b];
+        if (activ->val[p][b] < 0)
+          activ->val[p][b] = 0;
+      }
+    }
+  }else {
+    for (int p = 0; p < activ->n; p++){
+      for (int b = 0;b < activ->m; b++){
+        activ->val[p][b] += bias[b];
+      }
+    }
+  }
 	
 	/* Pooling */
 	
