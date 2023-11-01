@@ -191,12 +191,12 @@ int main(int argc, char *argv[])
       
       /* compute filters and their truelabels */
       for (int s = 0, col=0; s < Z->nsamples; s++) {
-	iftUnitNorm(Z->sample[s].feat, Z->nfeats);
-	truelabel[s] = Z->sample[s].truelabel;
-	for (int row = 0; row < Z->nfeats; row++){
-	  iftMatrixElem(kernels, col, row) = Z->sample[s].feat[row];
-	}
-	col++;
+        iftUnitNorm(Z->sample[s].feat, Z->nfeats);
+        truelabel[s] = Z->sample[s].truelabel;
+        for (int row = 0; row < Z->nfeats; row++){
+          iftMatrixElem(kernels, col, row) = Z->sample[s].feat[row];
+        }
+	      col++;
       }
 
       /* compute biases and update filters */
@@ -205,13 +205,13 @@ int main(int argc, char *argv[])
       bias = iftAllocFloatArray(kernels->ncols);
 
       /* Complete the code below to estimate the bias of each
-	 kernel */
-   for(int col = 0; col < kernels->ncols; col++){
-    for(int row = 0; row < Z->nfeats; row++){
-      iftMatrixElem(kernels, col, row) = iftMatrixElem(kernels, col, row) / Z->fsp.stdev[row];
-      bias[col] -= (Z->fsp.mean[row] * iftMatrixElem(kernels, col, row));
-    }
-   }
+      kernel */
+      for(int col = 0; col < kernels->ncols; col++){
+        for(int row = 0; row < Z->nfeats; row++){
+          iftMatrixElem(kernels, col, row) = iftMatrixElem(kernels, col, row) / Z->fsp.stdev[row];
+          bias[col] -= (Z->fsp.mean[row] * iftMatrixElem(kernels, col, row));
+        }
+      }
 
       
       /* save kernels, biases, and truelabels of the kernels */
