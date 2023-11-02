@@ -25,6 +25,15 @@ Usage: encode_layer <P1> <P2> <P3>
 
 Após a execução, e gerado no bin a pasta layer1
 
+6-Decode Layer
+
+Usage: decode_layer <P1> <P2> <P3> <P4> <P5>
+[1] layer
+[2] architecture of the network
+[3] folder with the models
+[4] model_type (0: one model per image, 1: consolidated model with the saved kernel weights, Otherwise: consolidated model with adaptive weights)
+[5] output folder with the salience maps
+[6] optional folder with regions of interest (.nii.gz or .png)
 
 
 

@@ -51,14 +51,20 @@ iftAdjRel *GetDiskAdjacency(iftImage *img, iftFLIMLayer layer)
 
 /* Complete the code below to compute adaptive kernel weights */
 
-float *AdaptiveWeights(iftMImage *mimg, float perc_thres)
-{
+float *AdaptiveWeights(iftMImage *mimg, float perc_thres){
   float *weight     = iftAllocFloatArray(mimg->m);
+  float soma = 0, media;
 
-  for (int b=0; b < mimg->m; b++){
-
-
-
+  for (int b = 0; b < mimg->m; b++){
+    for (int p = 0; p < mimg->n; p++){
+      soma += mimg->val[p][b];
+    }
+    media = soma/mimg->n;
+    if (media <= perc_thres) {
+      weight[b] = 1.0;
+    }else{
+      weight[b] = -1.0;
+    }
   }
 
   return(weight);
@@ -118,19 +124,19 @@ int main(int argc, char *argv[])
     
     float *weight=NULL;
     if (model_type==0){
-	sprintf(filename,"%s/%s-conv%d-weights.txt",
-		model_dir,basename,layer);
+      sprintf(filename,"%s/%s-conv%d-weights.txt",
+      model_dir,basename,layer);
       if (iftFileExists(filename)){ 	
-	weight = LoadKernelWeights(filename);
+	      weight = LoadKernelWeights(filename);
       }
     }else{
       sprintf(filename,"%s/conv%d-weights.txt",model_dir,layer);
       if (model_type==1){
-	if (iftFileExists(filename)){ 	
-	  weight = LoadKernelWeights(filename);
-	}
+	      if (iftFileExists(filename)){ 	
+	        weight = LoadKernelWeights(filename);
+	      }
       } else {
-	weight = AdaptiveWeights(mimg, 0.10); 
+	      weight = AdaptiveWeights(mimg, 0.10); 
       }	
     }
     
