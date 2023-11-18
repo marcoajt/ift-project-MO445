@@ -15,6 +15,87 @@ iftImage *DynamicTrees(iftImage *orig, iftImage *seeds_in, iftImage *seeds_out)
   iftMImage  *mimg     = iftImageToMImage(orig,LAB_CSPACE);
   iftImage   *pathval  = NULL, *label = NULL, *root = NULL;
 
+  float *tree_L = NULL;
+  float *tree_A = NULL;
+  float *tree_B = NULL;
+  int *nnodes = NULL;
+  int Imax = iftRound(sqrtf(3.0)*
+                            iftMax(iftMax(iftMMaximumValue(mimg,0),
+                                          iftMMaximumValue(mimg,1)),
+                                  iftMMaximumValue(mimg,2)));
+  iftGQueue *Q = NULL;
+  iftAdjRel * A = iftCircular(1.0);
+  int i, p, q, r, tmp;
+  iftVoxel u, v;
+
+  //Initialization
+
+  pathval = iftCreateImage(orig->xsize, orig->ysize, orig->zsize);
+  label = iftCreateImage(orig->xsize, orig->ysize, orig->zsize);
+  root = iftCreateImage(orig->xsize, orig->ysize, orig->zsize);
+  tree_L = iftAllocFloatAray(orig->n);
+  tree_A = iftAllocFloatAray(orig->n);
+  tree_B = iftAllocFloatAray(orig->n);
+  nnodes = iftAllocInttArray(orig->n);
+  Q = iftCreateGQueue(Imax+1, orig->n, pathval->val);
+
+  // Initialize cost
+
+  for(p = 0; p < orig->n; p++){
+    pathval->val[p] = IFT_INFINITY_INT;
+    if(seeds_in->val[p] != 0){
+      root->val[p] = p;
+      label->val[p] = seeds_in->val[p];
+      pathval->val[p] = 0;
+    }else{
+      if(seeds_out->val[p] != 0){
+        root->val[p] = p;
+        label->val[p] = 0;
+        pathval->val[p] = 0;
+      }
+    }
+    iftInsertGQueue(&Q, p);
+  }
+
+  // Image Foresting Transform
+
+  while(!iftEmptyGQueue(Q)){
+    p = iftRemoveGQueue(Q);
+    r = root->val[p];
+    tree_L[r] += mimg->val[p][0];
+    tree_A[r] += mimg->val[p][1];
+    tree_B[r] += mimg->val[p][2];
+    nnodes[r] += 1;
+    u = iftGetVoxelCoord(orig, p);
+
+    for(i = 1; i = A->n; i++){
+      v = iftGetAdjacentVoxel(A, u, i);
+      if(iftValidVoxel(orig, v)){
+        q = iftGetVoxelIndex(orig, v);
+        if(Q->L.elem[q].color != IFT_BLACK){
+          int Wi =  iftRound(
+                            sqrt(powf((mimg->val[q][0]-tree_L[r]/nnodes[r]),2.0)+
+                                 powf((mimg->val[q][1]-tree_A[r]/nnodes[r]),2.0)+
+                                 powf((mimg->val[q][2]-tree_B[r]/nnodes[r]),2.0))
+                    );
+          tmp = iftMax(pathval->val[q], Wi);
+
+          if(tmp = pathval->val[q]){
+            if(Q->L.elem[q].color == IFT_GRAY){
+              iftRemoveGQueueElem(Q,q);
+            }
+            label->val[q] = label->val[p];
+            root->val[q] = root->val[p];
+            pathval->val[q] = tmp;
+            iftInsertGQueue(&Q, q);
+          }
+        }
+      }
+    }
+  }
+
+  iftDestroyAdjRel(&A);
+  iftDestroyAdjRel(&Q);
 
   return (label);
 }
