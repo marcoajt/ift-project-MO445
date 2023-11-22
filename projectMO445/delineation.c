@@ -33,10 +33,10 @@ iftImage *DynamicTrees(iftImage *orig, iftImage *seeds_in, iftImage *seeds_out)
   pathval = iftCreateImage(orig->xsize, orig->ysize, orig->zsize);
   label = iftCreateImage(orig->xsize, orig->ysize, orig->zsize);
   root = iftCreateImage(orig->xsize, orig->ysize, orig->zsize);
-  tree_L = iftAllocFloatAray(orig->n);
-  tree_A = iftAllocFloatAray(orig->n);
-  tree_B = iftAllocFloatAray(orig->n);
-  nnodes = iftAllocInttArray(orig->n);
+  tree_L = iftAllocFloatArray(orig->n);
+  tree_A = iftAllocFloatArray(orig->n);
+  tree_B = iftAllocFloatArray(orig->n);
+  nnodes = iftAllocIntArray(orig->n);
   Q = iftCreateGQueue(Imax+1, orig->n, pathval->val);
 
   // Initialize cost
@@ -68,7 +68,7 @@ iftImage *DynamicTrees(iftImage *orig, iftImage *seeds_in, iftImage *seeds_out)
     nnodes[r] += 1;
     u = iftGetVoxelCoord(orig, p);
 
-    for(i = 1; i = A->n; i++){
+    for(i = 1; i < A->n; i++){
       v = iftGetAdjacentVoxel(A, u, i);
       if(iftValidVoxel(orig, v)){
         q = iftGetVoxelIndex(orig, v);
@@ -80,7 +80,7 @@ iftImage *DynamicTrees(iftImage *orig, iftImage *seeds_in, iftImage *seeds_out)
                     );
           tmp = iftMax(pathval->val[q], Wi);
 
-          if(tmp = pathval->val[q]){
+          if(tmp < pathval->val[q]){
             if(Q->L.elem[q].color == IFT_GRAY){
               iftRemoveGQueueElem(Q,q);
             }
@@ -95,7 +95,7 @@ iftImage *DynamicTrees(iftImage *orig, iftImage *seeds_in, iftImage *seeds_out)
   }
 
   iftDestroyAdjRel(&A);
-  iftDestroyAdjRel(&Q);
+  iftDestroyGQueue(&Q);
 
   return (label);
 }
