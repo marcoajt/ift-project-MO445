@@ -1,6 +1,7 @@
 FLAGS = -fPIC -std=gnu11 -Wall -Wno-unused-result -pedantic
 
-NEWIFT_DIR = "/home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/libmo445"
+NEWIFT_DIR = "/home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/libmo445"
+
 
 BIN = $(NEWIFT_DIR)/bin
 

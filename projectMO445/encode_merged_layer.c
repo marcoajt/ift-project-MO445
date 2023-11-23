@@ -84,27 +84,27 @@ int main(int argc, char *argv[]) {
     for (int i=0; i < fs->n; i++) {
       iftMImage *mimg  = iftReadMImage(fs->files[i]->path);
       char *basename   = iftFilename(fs->files[i]->path, ".mimg");
-      float     *bias  = LoadBias(filename);
-      iftMatrix *K     = iftReadMatrix(filename);	 
+      //float     *bias  = LoadBias(filename);
+      //iftMatrix *K     = iftReadMatrix(filename);	 
       iftAdjRel *A     = GetPatchAdjacency(mimg, arch->layer[layer-1]);
 
       /* Complete the code below to compute convolution with a kernel
 	 bank followed by bias */
   
   iftMatrix *XI = iftMImageToFeatureMatrix(mimg,A,NULL);
-  iftMatrix *XJ = iftMultMatrices(XI, K);
+  iftMatrix *XJ = iftMultMatrices(XI, Kmerged);
 
   iftDestroyMatrix(&XI);
 
-  iftMImage *activ = iftMatrixToMImage(XJ, mimg->xsize, mimg->ysize, mimg->zsize, K->ncols, 'c');
+  iftMImage *activ = iftMatrixToMImage(XJ, mimg->xsize, mimg->ysize, mimg->zsize, Kmerged->ncols, 'c');
 
   iftDestroyMatrix(&XJ);
   iftDestroyAdjRel(&A);
 
-  if (arch->layer[layer-1].relu) {
+  if (arch->layer[layer-1].relu) { /* ReLu*/
     for (int p = 0; p < activ->n; p++){
       for (int b = 0; b < activ->m; b++){
-        activ->val[p][b] += bias[b];
+        activ->val[p][b] += bias_merged[b];
         if (activ->val[p][b] < 0)
           activ->val[p][b] = 0;
       }
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
   }else {
     for (int p = 0; p < activ->n; p++){
       for (int b = 0;b < activ->m; b++){
-        activ->val[p][b] += bias[b];
+        activ->val[p][b] += bias_merged[b];
       }
     }
   }
