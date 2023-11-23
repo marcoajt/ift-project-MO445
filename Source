@@ -3,17 +3,19 @@ https://github.com/LIDS-UNICAMP/MISe
 
 Passos do trabalho
 
-1-Prepoc - Preprocessar as imagens. Pasta das imagens /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images
-COD: ./preproc /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images 1 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images_filter
+1-Prepoc - Preprocessar as imagens. Pasta das imagens 
+/home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images
+COD: 
+./preproc /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/images 1 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/images_filter
 
 2-Utilizar o Flim para marcar o objeto, depois disso salvar as imagens.
 3-Depois utilizar o Bag of Feature Points 
 
-./bag_of_feature_points /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/images /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/markers 2 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/bag_markers
+./bag_of_feature_points /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/images /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/markers 2 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/bag_markers
 
 
 4-Create_layer
-./create_layer_model /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/bag_markers /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/arch.json 1 newflim
+./create_layer_model /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/bag_markers /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json 1 newflim
 
 5-Encode Layer
 Usage: encode_layer <P1> <P2> <P3>
@@ -21,7 +23,7 @@ Usage: encode_layer <P1> <P2> <P3>
 [2] layer number (1, 2, 3) 
 [3] folder with the models   (Pega os modelos da pasta newflim)
 
-./encode_layer /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/Codigo/projectMO445/arch.json 1 newflim/
+./encode_layer /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json 1 newflim/
 
 Após a execução, e gerado no bin a pasta layer1
 
@@ -35,5 +37,9 @@ Usage: decode_layer <P1> <P2> <P3> <P4> <P5>
 [5] output folder with the salience maps
 [6] optional folder with regions of interest (.nii.gz or .png)
 
+./decode_layer 1 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json newflim 2 salie
 
+
+anteriormente:
+./merge_layer_models /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json 1 newflim/
 
