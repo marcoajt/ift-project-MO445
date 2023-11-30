@@ -1,6 +1,11 @@
 Git 
 https://github.com/LIDS-UNICAMP/MISe
 
+Importante, iftDice é usar as metricas, não está em nenhum arquivo
+
+visulizar as imagens :
+display salie/*
+
 Passos do trabalho
 
 1-Prepoc - Preprocessar as imagens. Pasta das imagens 

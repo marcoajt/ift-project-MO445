@@ -144,11 +144,11 @@ int main(int argc, char *argv[])
       iftFImage *salie = iftCreateFImage(mimg->xsize,mimg->ysize,mimg->zsize);
       /* decode layer */
       for (int p=0; p < mimg->n; p++){
-	for (int b=0; b < mimg->m; b++){
-	  salie->val[p] += mimg->val[p][b]*weight[b]; 
-	}
-	if (salie->val[p]<0)
-	  salie->val[p]=0; /* ReLU (or Sigmoid?) */ 
+	      for (int b=0; b < mimg->m; b++){
+	        salie->val[p] += mimg->val[p][b]*weight[b]; 
+	      }
+	      if (salie->val[p]<0)
+	        salie->val[p]=0; /* ReLU (or Sigmoid?) */ 
       }
       iftFree(weight); 
       
