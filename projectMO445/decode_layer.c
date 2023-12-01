@@ -28,6 +28,26 @@ float *LoadKernelWeights(char *filename)
   return(weight);
 }
 
+iftAdjRel *GetPatchAdjacency(iftMImage *mimg, iftFLIMLayer layer){
+  iftAdjRel *A;
+
+  if (iftIs3DMImage(mimg)){
+    A = iftCuboidWithDilationForConv(layer.kernel_size[0],
+                                    layer.kernel_size[1],
+                                    layer.kernel_size[2],
+                                    layer.dilation_rate[0],
+                                    layer.dilation_rate[1],
+                                    layer.dilation_rate[2]);
+  }else{
+    A = iftRectangularWithDilationForConv(layer.kernel_size[0],
+                                    layer.kernel_size[1],
+                                    layer.dilation_rate[0],
+                                    layer.dilation_rate[1]);    
+  }
+
+  return(A);
+}
+
 iftAdjRel *GetDiskAdjacency(iftImage *img, iftFLIMLayer layer)
 {
   iftAdjRel *A;
@@ -95,6 +115,36 @@ float *AdaptiveWeights(iftMImage *mimg, float perc_thres)
   return(weight);
 }*/
 
+// void ELiminateFrameActiv(iftMImage *mimg, iftAdjRel *B){
+//   for (int p = 0; p < mimg->n; p++){
+//     iftVoxel u = iftMGetVoxelCoord(mimg,p);
+//     for (int i = 1; i < B->n; i++){
+//       iftVoxel v = iftGetAdjacentVoxel(B, u, i);
+//       if (!iftMValidVoxel(mimg, v)){
+//         for (int b = 0; b < mimg->m; b++){
+//           mimg->val[p][b] = 0.0;
+//         }
+//       }
+//       break;
+//     }
+//   }
+// }
+
+void EliminateFrameActiv(iftMImage *mimg, iftAdjRel *B) {
+  for (int p = 0; p < mimg->n; p++){
+    iftVoxel u = iftMGetVoxelCoord(mimg, p);
+    for (int i = 0; i < B->n; i++){
+      iftVoxel v = iftGetAdjacentVoxel(B, u, i);
+      if (!iftMValidVoxel(mimg, v)){
+        for (int b = 0; b < mimg->m; b++){
+          mimg->val[p][b] = 0.0;
+        } 
+      }
+      break;
+    }
+  } 
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -161,6 +211,8 @@ int main(int argc, char *argv[])
 	        weight = LoadKernelWeights(filename);
 	      }
       } else {
+        iftAdjRel *B = GetPatchAdjacency(mimg, arch->layer[layer-1]);
+        EliminateFrameActiv(mimg,B);
 	      weight = AdaptiveWeights(mimg, 0.10); 
       }	
     }
