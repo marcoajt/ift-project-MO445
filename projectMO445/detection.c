@@ -76,9 +76,9 @@ int main(int argc, char *argv[])
     char *basename1   = iftFilename(fs->files[i]->path,suffix);      
     char *basename2   = iftFilename(fs->files[i]->path,".png");      
     iftImage *salie   = iftReadImageByExt(fs->files[i]->path);
-    sprintf(filename,"./truelabels/%s.png",basename1);
+    sprintf(filename,"../../projectMO445/truelabels/%s.png",basename1);
     iftImage *gt      = iftReadImageByExt(filename);
-    sprintf(filename,"./images/%s.png",basename1);
+    sprintf(filename,"../../projectMO445/images/%s.png",basename1);
     iftImage *orig    = iftReadImageByExt(filename);
     int Imax          = iftNormalizationValue(iftMaximumValue(orig));
  

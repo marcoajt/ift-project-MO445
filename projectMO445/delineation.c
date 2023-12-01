@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
 
     iftImage *gradI = ImageGradient(orig,A);
     iftImage  *bin  = iftThreshold(salie,iftOtsu(salie),IFT_INFINITY_INT,255);
-    iftImage  *seeds_in = iftSelectCompInAreaInterval(bin, NULL, 400, 4000);
+    iftImage  *seeds_in = iftSelectCompInAreaInterval(bin, NULL, 400, 4000); //(mudar relacionado ao seed) area maiores, paramentros para mudar
     iftDestroyImage(&bin);
     iftImage  *img      = NULL;
 
@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
       img = iftCopyImage(orig);
     else{
       iftSet *S       = NULL;
-      bin             = iftDilateBin(seeds_in,&S,15.0);
+      bin             = iftDilateBin(seeds_in,&S,15.0); // valores maiores ou menores para dilatação morfologico
       iftDestroySet(&S);
       iftImage *seeds_out = iftComplement(bin);
       iftDestroyImage(&bin);

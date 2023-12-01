@@ -50,24 +50,24 @@ nlayers      = int(sys.argv[1])
 target_layer = int(sys.argv[2])
 model_type   = int(sys.argv[3])
 
-os.system("./preproc ../../images 1.5 ./filtered")
-npts_per_marker = 1
-line = "./bag_of_feature_points ./filtered ../../markers {} ./bag".format(npts_per_marker)
+# os.system("./preproc ../../projectMO445/images 1.5 ./filtered")
+npts_per_marker = 14
+line = "./bag_of_feature_points ../../projectMO445/images_filter ../../projectMO445/markers {} ./bag".format(npts_per_marker)
 os.system(line)
 
 for layer in range(1,nlayers+1):
-    line = "./create_layer_model ./bag ../../arch.json {} ./flim".format(layer)
+    line = "./create_layer_model ./bag ../../projectMO445/arch.json {} ./flim".format(layer)
     os.system(line)
     if (model_type == 0):
-        line = "./encode_layer ../../arch.json {} ./flim".format(layer)
+        line = "./encode_layer ../../projectMO445/arch.json {} ./flim".format(layer)
         os.system(line)
     else:
-        line = "./merge_layer_models ../../arch.json {} ./flim".format(layer)
+        line = "./merge_layer_models ../../projectMO445/arch.json {} ./flim".format(layer)
         os.system(line)
-        line = "./encode_merged_layer ../../arch.json {} ./flim".format(layer)
+        line = "./encode_merged_layer ../../projectMO445/arch.json {} ./flim".format(layer)
         os.system(line)
 
-line = "./decode_layer {} ../../arch.json ./flim {} ./salie".format(target_layer, model_type)
+line = "./decode_layer {} ../../projectMO445/arch.json ./flim {} ./salie".format(target_layer, model_type)
 os.system(line)
 line = "./detection ./salie {} ./boxes".format(target_layer)
 os.system(line)
