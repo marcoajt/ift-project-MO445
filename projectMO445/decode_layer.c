@@ -1,4 +1,5 @@
 #include "ift.h"
+#include <math.h>
 
 /* Author: Alexandre Xavier Falcão (September, 10th 2023) 
 
@@ -224,8 +225,9 @@ int main(int argc, char *argv[])
 	      for (int b=0; b < mimg->m; b++){
 	        salie->val[p] += mimg->val[p][b]*weight[b]; 
 	      }
+        // salie->val[p] = 1/(1+exp(-(salie->val[p])));//Sigmoid
 	      if (salie->val[p]<0)
-	        salie->val[p]=0; /* ReLU (or Sigmoid?) */ 
+	        salie->val[p]=0; /* ReLU (or Sigmoid?) */  //Sigmoid   double x   1/(1+exp(-x))
       }
       iftFree(weight); 
       

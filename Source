@@ -94,7 +94,7 @@ Usage: detection <P1> <P2> <P3>
 [3] output folder with the resulting bounding boxes
 
 
-
+AIOU
 
 anteriormente:
 ./merge_layer_models /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json 1 newflim/

@@ -248,6 +248,8 @@ int main(int argc, char *argv[])
   iftAdjRel *B       = iftCircular(1.5);      
   iftAdjRel *C       = iftCircular(1.0);
 
+  float *dices_scores = calloc(sizeof(float), fs->n);// fs->n total de imagens
+
   for(int i = 0; i < fs->n; i++) {
     printf("Processing image %d of %ld\r", i + 1, fs->n);
     char *basename1   = iftFilename(fs->files[i]->path,suffix);      
@@ -255,6 +257,10 @@ int main(int argc, char *argv[])
     iftImage *salie   = iftReadImageByExt(fs->files[i]->path);
     sprintf(filename,"../../projectMO445/images/%s.png",basename1);
     iftImage *orig    = iftReadImageByExt(filename);
+
+    sprintf(filename,"../../projectMO445/truelabels/%s.png",basename1);
+    iftImage *True_mask    = iftReadImageByExt(filename);
+    iftImage *True_mask_Bin = iftBinarize(True_mask);
     
     /* Delineate parasite */
 
@@ -284,6 +290,10 @@ int main(int argc, char *argv[])
       label = smooth_label;
       iftDestroyFImage(&weight);
       img              = iftCopyImage(orig);
+
+      float dice = iftDiceSimilarity(iftBinarize(label), iftBinarize(True_mask));
+      dices_scores[i] = dice;
+
       iftDrawBorders(img, label, C, ctb->color[1], B);
       iftDestroyImage(&label);
       iftDestroyImage(&seeds_out);
@@ -303,6 +313,8 @@ int main(int argc, char *argv[])
     iftFree(basename1);
     iftFree(basename2);
   }
+
+  printf("Average DICE: %f\n", iftMean(dices_scores,fs->n));
 
   iftDestroyColorTable(&ctb);
   iftFree(filename);
