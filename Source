@@ -6,6 +6,9 @@ Importante, iftDice é usar as metricas, não está em nenhum arquivo
 visulizar as imagens :
 display salie/*
 
+seguindo os comandos funciona somente com 1 imagem, 
+porem com mais de uma imagem não funciona, executar o exec py
+
 Passos do trabalho
 
 1-Prepoc - Preprocessar as imagens. Pasta das imagens 
@@ -15,11 +18,27 @@ COD:
 
 2-Utilizar o Flim para marcar o objeto, depois disso salvar as imagens.
 3-Depois utilizar o Bag of Feature Points 
+Config arch.json
+        "nkernels_per_marker": 1, //para cada layer
+
+        bag_of_feature_points filtered_images markers 1 bag 
+
+
+       If you use disks as markers, 1 feature point per
+       marker is fine. However, if you draw strokes, try from 3-5
+       feature points per marker. Recall that each feature point will
+       create one kernel. 
 
 ./bag_of_feature_points /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/images /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/markers 2 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/bag_markers
 
 
-4-Create_layer
+4-Create_layer(aplicar para cada create layer e encode)
+Usage: create_layer_model P1 P2 P3 P4
+P1: input folder with feature points (-fpts.txt)
+P2: input network architecture (.json)
+P3: input layer for patch definition (1, 2, 3, etc)
+P4: output folder with the models
+
 ./create_layer_model /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/bag_markers /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json 1 newflim
 
 5-Encode Layer
@@ -32,6 +51,24 @@ Usage: encode_layer <P1> <P2> <P3>
 
 Após a execução, e gerado no bin a pasta layer1
 
+merge layer (para cada camada)
+Usage: merge_layer_models <P1> <P2> <P3> 
+[1] architecture of the network (.json) 
+[2] layer number (1, 2, 3) 
+[3] folder with the models 
+./merge_layer_models /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json 4 newflim/
+
+
+encode_merge layer(para cada layer)
+Usage: encode_merged_layer <P1> <P2> <P3> 
+[1] architecture of the network (.json) 
+[2] layer number (1, 2, 3) 
+[3] folder with the models 
+
+./encode_merged_layer /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json 4 newflim/
+Done ... 4 sec(s) 832 ms
+
+
 6-Decode Layer
 
 Usage: decode_layer <P1> <P2> <P3> <P4> <P5>
@@ -43,6 +80,20 @@ Usage: decode_layer <P1> <P2> <P3> <P4> <P5>
 [6] optional folder with regions of interest (.nii.gz or .png)
 
 ./decode_layer 1 /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/arch.json newflim 2 salie
+
+Usage: delineation <P1> <P2> <P3>
+[1] folder with the salience maps
+[2] layer (1,2,...) to create the results
+[3] output folder with the resulting images
+
+./delineation /home/marco/Documentos/Unicamp/Disciplinas/1-Semestre/Image_Analysis/ift-project-MO445/projectMO445/images/ 1 fim
+
+Usage: detection <P1> <P2> <P3>
+[1] folder with the salience maps
+[2] layer (1,2,...) to create the results
+[3] output folder with the resulting bounding boxes
+
+
 
 
 anteriormente:

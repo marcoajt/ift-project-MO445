@@ -13,7 +13,7 @@
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 1,
+            "nkernels_per_marker": 14,
             "noutput_channels": 2
         },
         "pooling": {
@@ -40,7 +40,7 @@
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 1,
+            "nkernels_per_marker": 14,
             "noutput_channels": 2
         },
         "pooling": {
@@ -67,7 +67,7 @@
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 1,
+            "nkernels_per_marker": 14,
             "noutput_channels": 2
         },
         "pooling": {
@@ -94,7 +94,7 @@
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 1,
+            "nkernels_per_marker": 14,
             "noutput_channels": 2
         },
         "pooling": {

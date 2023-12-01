@@ -51,7 +51,32 @@ iftAdjRel *GetDiskAdjacency(iftImage *img, iftFLIMLayer layer)
 
 /* Complete the code below to compute adaptive kernel weights */
 
-float *AdaptiveWeights(iftMImage *mimg, float perc_thres){
+float *AdaptiveWeights(iftMImage *mimg, float perc_thres)
+{
+  float *weight     = iftAllocFloatArray(mimg->m);
+
+  for (int b=0; b < mimg->m; b++){
+    iftImage *img = iftMImageToImage(mimg,255,b);
+    int thres     = iftOtsu(img);
+    long nelems   = 0;   
+    for (int p=0; p < img->n; p++){
+      if (img->val[p]>thres)
+	nelems += 1;
+    }
+    float w = ((float)nelems/(float)img->n);
+    if (w <= perc_thres){
+      weight[b]=1.0-w;
+    } else {
+      weight[b]=-powf(0.9,w);
+    }
+
+    iftDestroyImage(&img);
+  }
+
+  return(weight);
+}
+
+/*float *AdaptiveWeights(iftMImage *mimg, float perc_thres){
   float *weight     = iftAllocFloatArray(mimg->m);
   float soma = 0, media;
 
@@ -68,7 +93,7 @@ float *AdaptiveWeights(iftMImage *mimg, float perc_thres){
   }
 
   return(weight);
-}
+}*/
 
 int main(int argc, char *argv[])
 {

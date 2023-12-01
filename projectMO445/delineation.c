@@ -93,9 +93,13 @@ iftImage *DynamicTrees(iftImage *orig, iftImage *seeds_in, iftImage *seeds_out)
       }
     }
   }
-
   iftDestroyAdjRel(&A);
   iftDestroyGQueue(&Q);
+  iftDestroyImage(&pathval);
+  free(tree_L);
+  free(tree_A);
+  free(tree_B);
+  free(nnodes);
 
   return (label);
 }
@@ -249,7 +253,7 @@ int main(int argc, char *argv[])
     char *basename1   = iftFilename(fs->files[i]->path,suffix);      
     char *basename2   = iftFilename(fs->files[i]->path,".png");      
     iftImage *salie   = iftReadImageByExt(fs->files[i]->path);
-    sprintf(filename,"./images/%s.png",basename1);
+    sprintf(filename,"../../projectMO445/images/%s.png",basename1);
     iftImage *orig    = iftReadImageByExt(filename);
     
     /* Delineate parasite */
