@@ -72,13 +72,13 @@ iftAdjRel *GetDiskAdjacency(iftImage *img, iftFLIMLayer layer)
 
 /* Complete the code below to compute adaptive kernel weights */
 
-float *AdaptiveWeights(iftMImage *mimg, float perc_thres)
+float *AdaptiveWeights(iftMImage *mimg, float scale_otsu, float perc_thres)
 {
   float *weight     = iftAllocFloatArray(mimg->m);
 
   for (int b=0; b < mimg->m; b++){
     iftImage *img = iftMImageToImage(mimg,255,b);
-    int thres     = iftOtsu(img);
+    int thres     = iftOtsu(img) * scale_otsu;
     long nelems   = 0;   
     for (int p=0; p < img->n; p++){
       if (img->val[p]>thres)
@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
       } else {
         iftAdjRel *B = GetPatchAdjacency(mimg, arch->layer[layer-1]);
         EliminateFrameActiv(mimg,B);
-	      weight = AdaptiveWeights(mimg, 0.10); 
+	      weight = AdaptiveWeights(mimg, 1.3, 0.10); //variar esses 2 valores relação dice 0.5 a 2/ 0.1 a 0.4
       }	
     }
     
@@ -225,7 +225,7 @@ int main(int argc, char *argv[])
 	      for (int b=0; b < mimg->m; b++){
 	        salie->val[p] += mimg->val[p][b]*weight[b]; 
 	      }
-        // salie->val[p] = 1/(1+exp(-(salie->val[p])));//Sigmoid
+        // salie->val[p] = 1/(1+exp(-(salie->val[p])));//Sigmoid não contrinui com linearidade
 	      if (salie->val[p]<0)
 	        salie->val[p]=0; /* ReLU (or Sigmoid?) */  //Sigmoid   double x   1/(1+exp(-x))
       }

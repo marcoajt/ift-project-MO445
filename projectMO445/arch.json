@@ -3,18 +3,18 @@
     "layer1": {
         "conv": {
             "dilation_rate": [
-                1,
+                2,
                 1,
                 0
             ],
             "kernel_size": [
-                5,
-                5,
+                7,
+                7,
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 14,
-            "noutput_channels": 2
+            "nkernels_per_marker": 5,
+            "noutput_channels": 4
         },
         "pooling": {
             "size": [
@@ -23,25 +23,25 @@
                 0
             ],
             "stride": 2,
-            "type": "max_pool"
+            "type": "avg_pool"
         },
         "relu": true
     },
     "layer2": {
         "conv": {
             "dilation_rate": [
-                1,
+                2,
                 1,
                 0
             ],
             "kernel_size": [
-                5,
-                5,
+                7,
+                7,
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 14,
-            "noutput_channels": 2
+            "nkernels_per_marker": 5,
+            "noutput_channels": 4
         },
         "pooling": {
             "size": [
@@ -50,24 +50,25 @@
                 0
             ],
             "stride": 2,
-            "type": "max_pool"
+            "type": "avg_pool"
         },
         "relu": true
     },
+
     "layer3": {
         "conv": {
             "dilation_rate": [
-                1,
+                2,
                 1,
                 0
             ],
             "kernel_size": [
-                5,
-                5,
+                7,
+                7,
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 14,
+            "nkernels_per_marker": 5,
             "noutput_channels": 2
         },
         "pooling": {
@@ -77,24 +78,24 @@
                 0
             ],
             "stride": 2,
-            "type": "max_pool"
+            "type": "avg_pool"
         },
         "relu": true
     },
     "layer4": {
         "conv": {
             "dilation_rate": [
-                1,
+                2,
                 1,
                 0
             ],
             "kernel_size": [
-                5,
-                5,
+                7,
+                7,
                 0
             ],
             "nkernels_per_image": 10000,
-            "nkernels_per_marker": 14,
+            "nkernels_per_marker": 5,
             "noutput_channels": 2
         },
         "pooling": {
@@ -104,10 +105,11 @@
                 0
             ],
             "stride": 2,
-            "type": "max_pool"
+            "type": "avg_pool"
         },
         "relu": true
     },
+    
     "nlayers": 4,
     "stdev_factor": 0.01
 }
