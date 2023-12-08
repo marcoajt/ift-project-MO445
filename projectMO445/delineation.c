@@ -78,7 +78,7 @@ iftImage *DynamicTrees(iftImage *orig, iftImage *seeds_in, iftImage *seeds_out)
                                  powf((mimg->val[q][1]-tree_A[r]/nnodes[r]),2.0)+
                                  powf((mimg->val[q][2]-tree_B[r]/nnodes[r]),2.0))
                     );
-          tmp = iftMax(pathval->val[q], Wi);
+          tmp = iftMax(pathval->val[p], Wi);
 
           if(tmp < pathval->val[q]){
             if(Q->L.elem[q].color == IFT_GRAY){

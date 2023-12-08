@@ -50,7 +50,7 @@ nlayers      = int(sys.argv[1])
 target_layer = int(sys.argv[2])
 model_type   = int(sys.argv[3])
 
-# os.system("./preproc ../../projectMO445/images 1.5 ./filtered")
+os.system("./preproc ../../projectMO445/images 0.0 ../../projectMO445/images_filter")
 npts_per_marker = 2
 line = "./bag_of_feature_points ../../projectMO445/images_filter ../../projectMO445/markers {} ./bag".format(npts_per_marker)
 os.system(line)
